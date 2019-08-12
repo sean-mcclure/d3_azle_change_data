@@ -23,23 +23,6 @@ create_azle(function() {
 		"height": "auto"
 	})
 
-	az.add_button('my_section', 1, {
-		"this_class": 'change_data_button',
-		"text": "CHANGE DATA"
-	})
-
-	az.style_button('change_data_button', 1, {
-		"background": "rgb(16, 168, 180)",
-		"outline": 0
-	})
-
-	az.add_event('change_data_button', 1, {
-		"type": "click",
-		"function": function() {
-			update_data_full()
-		}
-	})
-
 	barchart_wrapper_args = {
 		"data_path": "../data/bar_data.tsv",
 		"y_title": "AVG RETURN",
@@ -57,6 +40,63 @@ create_azle(function() {
 		"text_size": "az.all_style_d3('text', {'font-size' : '17px'})"
 	}
 
+	az.add_button('my_section', 1, {
+		"this_class": 'change_data_button',
+		"text": "CHANGE DATA"
+	})
+
+	az.style_button('change_data_button', 1, {
+		"background": "rgb(16, 168, 180)",
+		"outline": 0
+	})
+
+	// adding  color picker and slider example ************
+
+	az.add_button('my_section', 1, {
+		"this_class": 'color_picker_button',
+		"text": "CHOOSE COLOR"
+	})
+
+	az.style_button('color_picker_button', 1, {
+		"background": "rgb(16, 168, 180)",
+		"margin-left": "10px",
+		"outline": 0
+	})
+
+	az.add_event('color_picker_button', 1, {
+		"type": "click",
+		"function": function() {
+			bar_color()
+		}
+	})
+
+	az.add_slider('my_section', 1, {
+		"this_class": "d3_edit_slider",
+		"default_value": barchart_wrapper_args.left_choice,
+		"min_value": 0,
+		"max_value": 99
+	})
+
+	az.style_slider('d3_edit_slider', 1, {
+	    "display" : "inline",
+	    "margin-left" : "10px",
+	    "width" : "100px"
+	})
+
+	az.add_event('d3_edit_slider', 1, {
+		"type": "as_change",
+		"function": function(this_id) {
+			chart_left(az.grab_value('d3_edit_slider', az.get_target_instance(this_id)))
+		}
+	})
+
+	az.add_event('change_data_button', 1, {
+		"type": "click",
+		"function": function() {
+			update_data_full()
+		}
+	})
+
 	az.add_d3_visual('my_section', 1, {
 		"this_class": "my_d3",
 		"html_path": "visuals/barchart.html",
@@ -65,6 +105,8 @@ create_azle(function() {
 	})
 
 })
+
+// *********** functions to call **************
 
 function update_data_a() {
 	az.call_d3_wrapper('my_d3', 1, {
@@ -84,6 +126,28 @@ function update_data_b() {
 
 function update_data_full() {
 	az.toggle_functions('update_data_b()', 'update_data_a()')
+}
+
+function bar_color() {
+	az.add_color_picker({
+		"type": "modal",
+		"this_class": "bar_color_picker",
+		"function": function() {
+			az.call_d3_wrapper('my_d3', 1, {
+				"wrapper_arguments": barchart_wrapper_args,
+				"extra_functions": barchart_extras,
+				"bar_color": az.global_current_color
+			})
+		}
+	})
+}
+
+function chart_left(val) {
+	az.call_d3_wrapper('my_d3', 1, {
+		"wrapper_arguments": barchart_wrapper_args,
+		"extra_functions": barchart_extras,
+		"left_choice": val
+	})
 }
 
 </script>
