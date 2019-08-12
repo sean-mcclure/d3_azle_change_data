@@ -12,77 +12,78 @@
 <script>
 
 create_azle(function() {
-   
-   az.add_sections({
-       "this_class" : "my_section",
-       "sections" : 1
-   })
-   
-   az.style_sections('my_section', 1, {
-       "background" : "rgb(54, 66, 80)",
-       "height" : "auto"
-   })
-   
-   az.add_button('my_section', 1, {
-        "this_class": 'change_data_button',
-        "text": "CHANGE DATA"
-    })
-    az.style_button('change_data_button', 1, {
-        "background": "rgb(16, 168, 180)",
-        "outline" : 0
-    })
-    az.add_event('change_data_button', 1, {
-        "type" : "click", 
-        "function" : function() {
-            update_data_full()
-        }
-    })
-   
-   barchart_wrapper_args = {
-        "data_path": "../data/bar_data.tsv",
-        "y_title": "AVG RETURN",
-        "top_choice": 30,
-        "right_choice": 30,
-        "bottom_choice": 30,
-        "left_choice": 60,
-        "bar_color": "rgb(48, 229, 255)",
-        "title_color": "white",
-        "chart_width": 950
-    }
-    
-    barchart_extras = {
-        "text_color": "az.all_style_d3('text', {'fill' : 'white'})",
-        "text_size": "az.all_style_d3('text', {'font-size' : '17px'})"
-    }
-   
-   az.add_d3_visual('my_section', 1, {
-        "this_class": "my_d3",
-        "html_path": "visuals/barchart.html",
-        "wrapper_arguments": barchart_wrapper_args,
-        "extra_functions": barchart_extras
-   })
-    
+
+	az.add_sections({
+		"this_class": "my_section",
+		"sections": 1
+	})
+
+	az.style_sections('my_section', 1, {
+		"background": "rgb(54, 66, 80)",
+		"height": "auto"
+	})
+
+	az.add_button('my_section', 1, {
+		"this_class": 'change_data_button',
+		"text": "CHANGE DATA"
+	})
+
+	az.style_button('change_data_button', 1, {
+		"background": "rgb(16, 168, 180)",
+		"outline": 0
+	})
+
+	az.add_event('change_data_button', 1, {
+		"type": "click",
+		"function": function() {
+			update_data_full()
+		}
+	})
+
+	barchart_wrapper_args = {
+		"data_path": "../data/bar_data.tsv",
+		"y_title": "AVG RETURN",
+		"top_choice": 30,
+		"right_choice": 30,
+		"bottom_choice": 30,
+		"left_choice": 60,
+		"bar_color": "rgb(48, 229, 255)",
+		"title_color": "white",
+		"chart_width": 950
+	}
+
+	barchart_extras = {
+		"text_color": "az.all_style_d3('text', {'fill' : 'white'})",
+		"text_size": "az.all_style_d3('text', {'font-size' : '17px'})"
+	}
+
+	az.add_d3_visual('my_section', 1, {
+		"this_class": "my_d3",
+		"html_path": "visuals/barchart.html",
+		"wrapper_arguments": barchart_wrapper_args,
+		"extra_functions": barchart_extras
+	})
 
 })
 
 function update_data_a() {
-    az.call_d3_wrapper('my_d3', 1, {
-        "wrapper_arguments": barchart_wrapper_args,
-        "extra_functions": barchart_extras,
-        "data_path": "../data/bar_data.tsv"
-    })
+	az.call_d3_wrapper('my_d3', 1, {
+		"wrapper_arguments": barchart_wrapper_args,
+		"extra_functions": barchart_extras,
+		"data_path": "../data/bar_data.tsv"
+	})
 }
 
 function update_data_b() {
-    az.call_d3_wrapper('my_d3', 1, {
-        "wrapper_arguments": barchart_wrapper_args,
-        "extra_functions": barchart_extras,
-        "data_path": "../data/bar_data_b.tsv"
-    })
+	az.call_d3_wrapper('my_d3', 1, {
+		"wrapper_arguments": barchart_wrapper_args,
+		"extra_functions": barchart_extras,
+		"data_path": "../data/bar_data_b.tsv"
+	})
 }
 
 function update_data_full() {
-    az.toggle_functions('update_data_b()', 'update_data_a()')
+	az.toggle_functions('update_data_b()', 'update_data_a()')
 }
 
 </script>
